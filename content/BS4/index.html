@@ -20,15 +20,15 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="###  BS4笔记 官方文档 一、解析HTML文件 1.1 配合request解析从网络上爬取的HTML 12345# 爬取HTMLimport requestsreq &#x3D; requests.get(&quot;https:&#x2F;&#x2F;www.baidu.com&quot;)req.encoding &#x3D; &amp;#x27;utf-8&amp;#x27;soup &#x3D; BeautifulSoup(req.te">
+<meta name="description" content="BS4笔记 官方文档 一、解析HTML文件 1.1 配合request解析从网络上爬取的HTML 12345# 爬取HTMLimport requestsreq &#x3D; requests.get(&quot;https:&#x2F;&#x2F;www.baidu.com&quot;)req.encoding &#x3D; &amp;#x27;utf-8&amp;#x27;soup &#x3D; BeautifulSoup(req.text,&amp;#x2">
 <meta property="og:type" content="article">
 <meta property="og:title" content="爬虫中BS4库的基本使用">
 <meta property="og:url" content="http://example.com/content/BS4/index.html">
 <meta property="og:site_name" content="SmallMatch">
-<meta property="og:description" content="###  BS4笔记 官方文档 一、解析HTML文件 1.1 配合request解析从网络上爬取的HTML 12345# 爬取HTMLimport requestsreq &#x3D; requests.get(&quot;https:&#x2F;&#x2F;www.baidu.com&quot;)req.encoding &#x3D; &amp;#x27;utf-8&amp;#x27;soup &#x3D; BeautifulSoup(req.te">
+<meta property="og:description" content="BS4笔记 官方文档 一、解析HTML文件 1.1 配合request解析从网络上爬取的HTML 12345# 爬取HTMLimport requestsreq &#x3D; requests.get(&quot;https:&#x2F;&#x2F;www.baidu.com&quot;)req.encoding &#x3D; &amp;#x27;utf-8&amp;#x27;soup &#x3D; BeautifulSoup(req.text,&amp;#x2">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2021-12-21T08:22:07.000Z">
-<meta property="article:modified_time" content="2021-12-21T09:20:19.527Z">
+<meta property="article:modified_time" content="2021-12-21T09:25:02.823Z">
 <meta property="article:author" content="SmallMatch">
 <meta property="article:tag" content="spider">
 <meta name="twitter:card" content="summary">
@@ -119,7 +119,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E8%A7%A3%E6%9E%90html%E6%96%87%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">一、解析HTML文件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E5%90%88request%E8%A7%A3%E6%9E%90%E4%BB%8E%E7%BD%91%E7%BB%9C%E4%B8%8A%E7%88%AC%E5%8F%96%E7%9A%84html"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 配合request解析从网络上爬取的HTML</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 解析本地文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAhtml%E5%BD%93%E5%9C%BA%E8%A7%A3%E6%9E%90"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 直接创建一个HTML当场解析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%AC%E6%AC%A1%E8%AE%B0%E5%BD%95%E4%BD%BF%E7%94%A8%E7%9A%84html"><span class="nav-number">1.4.</span> <span class="nav-text">1.4本次记录使用的HTML</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8Cbeautifulsoup%E4%B8%AD%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E5%B1%9E%E6%80%A7%E4%BB%8B%E7%BB%8D"><span class="nav-number"></span> <span class="nav-text">二、BeautifulSoup中一些基本属性介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#tag"><span class="nav-number">1.</span> <span class="nav-text">2.1 Tag</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#name"><span class="nav-number">2.</span> <span class="nav-text">2.2 Name</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#attributes"><span class="nav-number">3.</span> <span class="nav-text">2.3 Attributes</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#bs4%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">BS4笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E8%A7%A3%E6%9E%90html%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.</span> <span class="nav-text">一、解析HTML文件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%85%8D%E5%90%88request%E8%A7%A3%E6%9E%90%E4%BB%8E%E7%BD%91%E7%BB%9C%E4%B8%8A%E7%88%AC%E5%8F%96%E7%9A%84html"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.1 配合request解析从网络上爬取的HTML</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E8%A7%A3%E6%9E%90%E6%9C%AC%E5%9C%B0%E6%96%87%E4%BB%B6"><span class="nav-number">1.1.2.</span> <span class="nav-text">1.2 解析本地文件</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%9B%B4%E6%8E%A5%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AAhtml%E5%BD%93%E5%9C%BA%E8%A7%A3%E6%9E%90"><span class="nav-number">1.1.3.</span> <span class="nav-text">1.3 直接创建一个HTML当场解析</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9C%AC%E6%AC%A1%E8%AE%B0%E5%BD%95%E4%BD%BF%E7%94%A8%E7%9A%84html"><span class="nav-number">1.1.4.</span> <span class="nav-text">1.4本次记录使用的HTML</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8Cbeautifulsoup%E4%B8%AD%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E5%B1%9E%E6%80%A7%E4%BB%8B%E7%BB%8D"><span class="nav-number">2.</span> <span class="nav-text">二、BeautifulSoup中一些基本属性介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#tag"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Tag</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#name"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 Name</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#attributes"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 Attributes</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -217,7 +217,7 @@
       <span class="post-meta-item-text">发表于</span>
       
 
-      <time title="创建时间：2021-12-21 16:22:07 / 修改时间：17:20:19" itemprop="dateCreated datePublished" datetime="2021-12-21T16:22:07+08:00">2021-12-21</time>
+      <time title="创建时间：2021-12-21 16:22:07 / 修改时间：17:25:02" itemprop="dateCreated datePublished" datetime="2021-12-21T16:22:07+08:00">2021-12-21</time>
     </span>
 
   
@@ -245,9 +245,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        ###
-<center>
-<p>BS4笔记</p>
+        <h3 id="bs4笔记">BS4笔记</h3>
 <p><a target="_blank" rel="noopener" href="https://www.crummy.com/software/BeautifulSoup/bs4/doc.zh/#id19">官方文档</a></p>
 <h4 id="一解析html文件">一、解析HTML文件</h4>
 <h5 id="配合request解析从网络上爬取的html">1.1 配合request解析从网络上爬取的HTML</h5>
