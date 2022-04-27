@@ -20,12 +20,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="KMP算法 一、适用范围 一般用于字符的模式匹配问题 二、核心原理 2.1前缀函数 定义:对于长度为m的字符串s，其前缀函数为π(i)(0≤i&lt;m)表示s的字串s[0:i]的最长的相等的 真前缀和真后缀的长度。特别地，如果不存在符合条件的前后缀，那么π(i)&#x3D;0。 其中真前缀与真后缀的定义为不等于自身的前缀和后缀(就是不取下标为i的元素)。  image-20211222131">
+<meta name="description" content="KMP算法一、适用范围一般用于字符的模式匹配问题 二、核心原理2.1前缀函数定义:对于长度为m的字符串s，其前缀函数为π(i)(0≤i&lt;m)表示s的字串s[0:i]的最长的相等的真前缀和真后缀的长度。特别地，如果不存在符合条件的前后缀，那么π(i)&#x3D;0。其中真前缀与真后缀的定义为不等于自身的前缀和后缀(就是不取下标为i的元素)。  2.2如何求前缀函数三、参考链接实现 strStr() -">
 <meta property="og:type" content="article">
 <meta property="og:title" content="KMP">
 <meta property="og:url" content="http://example.com/content/KMP/index.html">
 <meta property="og:site_name" content="SmallMatch">
-<meta property="og:description" content="KMP算法 一、适用范围 一般用于字符的模式匹配问题 二、核心原理 2.1前缀函数 定义:对于长度为m的字符串s，其前缀函数为π(i)(0≤i&lt;m)表示s的字串s[0:i]的最长的相等的 真前缀和真后缀的长度。特别地，如果不存在符合条件的前后缀，那么π(i)&#x3D;0。 其中真前缀与真后缀的定义为不等于自身的前缀和后缀(就是不取下标为i的元素)。  image-20211222131">
+<meta property="og:description" content="KMP算法一、适用范围一般用于字符的模式匹配问题 二、核心原理2.1前缀函数定义:对于长度为m的字符串s，其前缀函数为π(i)(0≤i&lt;m)表示s的字串s[0:i]的最长的相等的真前缀和真后缀的长度。特别地，如果不存在符合条件的前后缀，那么π(i)&#x3D;0。其中真前缀与真后缀的定义为不等于自身的前缀和后缀(就是不取下标为i的元素)。  2.2如何求前缀函数三、参考链接实现 strStr() -">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="c:/Users/SmallMatch/AppData/Roaming/Typora/typora-user-images/image-20211222131049003.png">
 <meta property="og:image" content="https://pic.leetcode-cn.com/1618846927-xFAEXE-010FD8AE2B79FFE03DC3735ACD224A6A.png">
@@ -123,7 +123,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#kmp%E7%AE%97%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">KMP算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E9%80%82%E7%94%A8%E8%8C%83%E5%9B%B4"><span class="nav-number">1.1.</span> <span class="nav-text">一、适用范围</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">二、核心原理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%89%8D%E7%BC%80%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1前缀函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%B1%82%E5%89%8D%E7%BC%80%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2如何求前缀函数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">1.3.</span> <span class="nav-text">三、参考链接</span></a></li></ol></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#KMP%E7%AE%97%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">KMP算法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E9%80%82%E7%94%A8%E8%8C%83%E5%9B%B4"><span class="nav-number">1.1.</span> <span class="nav-text">一、适用范围</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">二、核心原理</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-1%E5%89%8D%E7%BC%80%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.1.</span> <span class="nav-text">2.1前缀函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2%E5%A6%82%E4%BD%95%E6%B1%82%E5%89%8D%E7%BC%80%E5%87%BD%E6%95%B0"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.2如何求前缀函数</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">1.3.</span> <span class="nav-text">三、参考链接</span></a></li></ol></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -138,7 +138,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -237,7 +237,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>1.1k</span>
+      <span>921</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -255,28 +255,14 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h3 id="kmp算法">KMP算法</h3>
-<h4 id="一适用范围">一、适用范围</h4>
-<p>一般用于字符的模式匹配问题</p>
-<h4 id="二核心原理">二、核心原理</h4>
-<h5 id="前缀函数">2.1前缀函数</h5>
-<p>定义:对于长度为m的字符串s，其前缀函数为<em>π</em>(<em>i</em>)(0≤<em>i</em>&lt;<em>m</em>)表示s的字串s[<em>0</em>:<em>i</em>]的最长的相等的 <strong>真前缀</strong>和<strong>真后缀</strong>的长度。特别地，如果不存在符合条件的前后缀，那么<em>π</em>(<em>i</em>)=0。 其中真前缀与真后缀的定义为不等于<strong>自身的前缀和后缀</strong>(就是不取下标为i的元素)。</p>
-<figure>
-<img src="C:\Users\SmallMatch\AppData\Roaming\Typora\typora-user-images\image-20211222131049003.png" alt="image-20211222131049003" /><figcaption aria-hidden="true">image-20211222131049003</figcaption>
-</figure>
-<h5 id="如何求前缀函数">2.2如何求前缀函数</h5>
-<h4 id="三参考链接">三、参考链接</h4>
-<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/implement-strstr/solution/shi-xian-strstr-by-leetcode-solution-ds6y/">实现 strStr() - 实现 strStr() - 力扣（LeetCode） (leetcode-cn.com)</a></p>
+        <h3 id="KMP算法"><a href="#KMP算法" class="headerlink" title="KMP算法"></a>KMP算法</h3><h4 id="一、适用范围"><a href="#一、适用范围" class="headerlink" title="一、适用范围"></a>一、适用范围</h4><p>一般用于字符的模式匹配问题</p>
+<h4 id="二、核心原理"><a href="#二、核心原理" class="headerlink" title="二、核心原理"></a>二、核心原理</h4><h5 id="2-1前缀函数"><a href="#2-1前缀函数" class="headerlink" title="2.1前缀函数"></a>2.1前缀函数</h5><p>定义:对于长度为m的字符串s，其前缀函数为<em>π</em>(<em>i</em>)(0≤<em>i</em>&lt;<em>m</em>)表示s的字串s[<em>0</em>:<em>i</em>]的最长的相等的<br><strong>真前缀</strong>和<strong>真后缀</strong>的长度。特别地，如果不存在符合条件的前后缀，那么<em>π</em>(<em>i</em>)=0。<br>其中真前缀与真后缀的定义为不等于<strong>自身的前缀和后缀</strong>(就是不取下标为i的元素)。</p>
+<p><img src="C:\Users\SmallMatch\AppData\Roaming\Typora\typora-user-images\image-20211222131049003.png" alt="image-20211222131049003"></p>
+<h5 id="2-2如何求前缀函数"><a href="#2-2如何求前缀函数" class="headerlink" title="2.2如何求前缀函数"></a>2.2如何求前缀函数</h5><h4 id="三、参考链接"><a href="#三、参考链接" class="headerlink" title="三、参考链接"></a>三、参考链接</h4><p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/implement-strstr/solution/shi-xian-strstr-by-leetcode-solution-ds6y/">实现 strStr() - 实现 strStr() - 力扣（LeetCode） (leetcode-cn.com)</a></p>
 <p>四、next代码实现</p>
-<figure>
-<img src="https://pic.leetcode-cn.com/1618846927-xFAEXE-010FD8AE2B79FFE03DC3735ACD224A6A.png" alt="010FD8AE2B79FFE03DC3735ACD224A6A.png" /><figcaption aria-hidden="true">010FD8AE2B79FFE03DC3735ACD224A6A.png</figcaption>
-</figure>
-<figure>
-<img src="https://pic.leetcode-cn.com/1618847960-lkVIDM-B9497542844478144BED83E9ADA0C12F.png" alt="B9497542844478144BED83E9ADA0C12F.png" /><figcaption aria-hidden="true">B9497542844478144BED83E9ADA0C12F.png</figcaption>
-</figure>
-<figure>
-<img src="https://pic.leetcode-cn.com/1618847981-wncoqJ-161584A2D930A7B91092A2C3872D9DE5.png" alt="161584A2D930A7B91092A2C3872D9DE5.png" /><figcaption aria-hidden="true">161584A2D930A7B91092A2C3872D9DE5.png</figcaption>
-</figure>
+<p><img src="https://pic.leetcode-cn.com/1618846927-xFAEXE-010FD8AE2B79FFE03DC3735ACD224A6A.png" alt="010FD8AE2B79FFE03DC3735ACD224A6A.png"></p>
+<p><img src="https://pic.leetcode-cn.com/1618847960-lkVIDM-B9497542844478144BED83E9ADA0C12F.png" alt="B9497542844478144BED83E9ADA0C12F.png"></p>
+<p><img src="https://pic.leetcode-cn.com/1618847981-wncoqJ-161584A2D930A7B91092A2C3872D9DE5.png" alt="161584A2D930A7B91092A2C3872D9DE5.png"></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">strStr</span><span class="params">(string s, string p)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = s.<span class="built_in">size</span>(), m = p.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">if</span>(m == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="comment">//设置哨兵</span></span><br><span class="line">        s.<span class="built_in">insert</span>(s.<span class="built_in">begin</span>(),<span class="string">&#x27; &#x27;</span>);</span><br><span class="line">        p.<span class="built_in">insert</span>(p.<span class="built_in">begin</span>(),<span class="string">&#x27; &#x27;</span>);</span><br><span class="line">        <span class="function">vector&lt;<span class="keyword">int</span>&gt; <span class="title">next</span><span class="params">(m + <span class="number">1</span>)</span></span>;<span class="comment">//next数组</span></span><br><span class="line">        <span class="comment">//预处理next数组</span></span><br><span class="line">        <span class="comment">//i表示当前到第i个位置时，计算next[i] 和 [...i]后缀数组的包括了当前的i</span></span><br><span class="line">        <span class="comment">//j表示当前匹配的最长的前缀字符串的最后一个位置，</span></span><br><span class="line">        <span class="comment">//&quot;aaabbbab&quot;</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">2</span>, j = <span class="number">0</span>; i &lt;= m; i++)&#123;</span><br><span class="line">            <span class="keyword">while</span>(j <span class="keyword">and</span> p[i] != p[j + <span class="number">1</span>]) j = next[j];</span><br><span class="line">            <span class="keyword">if</span>(p[i] == p[j + <span class="number">1</span>]) j++;</span><br><span class="line">            next[i] = j;</span><br><span class="line">            <span class="comment">/*</span></span><br><span class="line"><span class="comment">            if(p[i] == p[j + 1])&#123;next[i] = j + 1; j++;&#125;</span></span><br><span class="line"><span class="comment">            else&#123;next[i] = 0;&#125;</span></span><br><span class="line"><span class="comment">            */</span></span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//匹配过程</span></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>, j = <span class="number">0</span>; i &lt;= n; i++)&#123;</span><br><span class="line">            <span class="keyword">while</span>(j <span class="keyword">and</span> s[i] != p[j + <span class="number">1</span>]) j = next[j];</span><br><span class="line">            <span class="keyword">if</span>(s[i] == p[j + <span class="number">1</span>]) j++;</span><br><span class="line">            <span class="keyword">if</span>(j == m) <span class="keyword">return</span> i - m;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 
     </div>

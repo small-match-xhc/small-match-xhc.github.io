@@ -20,12 +20,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="博弈问题 一、博弈问题特点 1.1 状态的阐述 必胜状态，必败状态，必和状态 · 对于特定的状态，如果游戏已经结束，则根据结束时的状态决定必胜，必败和必和。 ​ · 如果已经分出胜负的话，那么该状态对于获胜方为必胜状态，对于落败方为必败状态 ​ · 如果是平局，那么对于该状态对于双方都是必和状态 · 从特定状态开始，如果存在一个操作将状态变成必败状态，则当前玩家可以选择该操作，当对方">
+<meta name="description" content="博弈问题一、博弈问题特点1.1 状态的阐述必胜状态，必败状态，必和状态 · 对于特定的状态，如果游戏已经结束，则根据结束时的状态决定必胜，必败和必和。 ​    · 如果已经分出胜负的话，那么该状态对于获胜方为必胜状态，对于落败方为必败状态 ​    · 如果是平局，那么对于该状态对于双方都是必和状态 · 从特定状态开始，如果存在一个操作将状态变成必败状态，则当前玩家可以选择该操作，当对方操作的时">
 <meta property="og:type" content="article">
 <meta property="og:title" content="“博弈问题”">
 <meta property="og:url" content="http://example.com/content/%E2%80%9C%E5%8D%9A%E5%BC%88%E9%97%AE%E9%A2%98%E2%80%9D/index.html">
 <meta property="og:site_name" content="SmallMatch">
-<meta property="og:description" content="博弈问题 一、博弈问题特点 1.1 状态的阐述 必胜状态，必败状态，必和状态 · 对于特定的状态，如果游戏已经结束，则根据结束时的状态决定必胜，必败和必和。 ​ · 如果已经分出胜负的话，那么该状态对于获胜方为必胜状态，对于落败方为必败状态 ​ · 如果是平局，那么对于该状态对于双方都是必和状态 · 从特定状态开始，如果存在一个操作将状态变成必败状态，则当前玩家可以选择该操作，当对方">
+<meta property="og:description" content="博弈问题一、博弈问题特点1.1 状态的阐述必胜状态，必败状态，必和状态 · 对于特定的状态，如果游戏已经结束，则根据结束时的状态决定必胜，必败和必和。 ​    · 如果已经分出胜负的话，那么该状态对于获胜方为必胜状态，对于落败方为必败状态 ​    · 如果是平局，那么对于该状态对于双方都是必和状态 · 从特定状态开始，如果存在一个操作将状态变成必败状态，则当前玩家可以选择该操作，当对方操作的时">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/images/猫和老鼠.png">
 <meta property="article:published_time" content="2022-01-04T03:57:46.000Z">
@@ -121,7 +121,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%9A%E5%BC%88%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">博弈问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E5%8D%9A%E5%BC%88%E9%97%AE%E9%A2%98%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">一、博弈问题特点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8A%B6%E6%80%81%E7%9A%84%E9%98%90%E8%BF%B0"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 状态的阐述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9C%80%E4%BC%98%E7%AD%96%E7%95%A5"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 最优策略</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E4%BE%8B%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">二、例题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">4.</span> <span class="nav-text">三、解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.</span> <span class="nav-text">四、代码实现</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%9A%E5%BC%88%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">博弈问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%80%E3%80%81%E5%8D%9A%E5%BC%88%E9%97%AE%E9%A2%98%E7%89%B9%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">一、博弈问题特点</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E7%8A%B6%E6%80%81%E7%9A%84%E9%98%90%E8%BF%B0"><span class="nav-number">2.1.</span> <span class="nav-text">1.1 状态的阐述</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-%E6%9C%80%E4%BC%98%E7%AD%96%E7%95%A5"><span class="nav-number">2.2.</span> <span class="nav-text">1.2 最优策略</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%8C%E3%80%81%E4%BE%8B%E9%A2%98"><span class="nav-number">3.</span> <span class="nav-text">二、例题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%89%E3%80%81%E8%A7%A3%E9%A2%98%E6%80%9D%E8%B7%AF"><span class="nav-number">4.</span> <span class="nav-text">三、解题思路</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E3%80%81%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">5.</span> <span class="nav-text">四、代码实现</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -136,7 +136,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -229,7 +229,7 @@
         <i class="far fa-file-word"></i>
       </span>
       <span class="post-meta-item-text">本文字数：</span>
-      <span>529</span>
+      <span>527</span>
     </span>
     <span class="post-meta-item" title="阅读时长">
       <span class="post-meta-item-icon">
@@ -247,28 +247,19 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <h3 id="博弈问题">博弈问题</h3>
-<h3 id="一博弈问题特点">一、博弈问题特点</h3>
-<h4 id="状态的阐述">1.1 状态的阐述</h4>
-<p>必胜状态，必败状态，必和状态</p>
+        <h3 id="博弈问题"><a href="#博弈问题" class="headerlink" title="博弈问题"></a>博弈问题</h3><h3 id="一、博弈问题特点"><a href="#一、博弈问题特点" class="headerlink" title="一、博弈问题特点"></a>一、博弈问题特点</h3><h4 id="1-1-状态的阐述"><a href="#1-1-状态的阐述" class="headerlink" title="1.1 状态的阐述"></a>1.1 状态的阐述</h4><p>必胜状态，必败状态，必和状态</p>
 <p>· 对于特定的状态，如果游戏已经结束，则根据结束时的状态决定必胜，必败和必和。</p>
-<p>​ · 如果已经分出胜负的话，那么该状态对于获胜方为必胜状态，对于落败方为必败状态</p>
-<p>​ · 如果是平局，那么对于该状态对于双方都是必和状态</p>
-<p>· 从特定状态开始，如果存在一个操作将状态变成必败状态，则当前玩家可以选择该操作，当对方操作的时候，对方选手的状态就为必败状态，因此该特定状态对于当前玩家为必胜状态</p>
+<p>​    · 如果已经分出胜负的话，那么该状态对于获胜方为必胜状态，对于落败方为必败状态</p>
+<p>​    · 如果是平局，那么对于该状态对于双方都是必和状态</p>
+<p>· 从特定状态开始，如果存在一个操作将状态变成必败状态，则当前玩家可以选择该操作，当对方操作的时候，对方选手的状态就为必败状态，因此该特定状态对于当前玩家为必胜状态 </p>
 <p>· 从特定状态开始，如果所有的操作都会将状态变成为必胜状态，那么当前玩家不管选择什么操作，当对手操作的时候，对方都为必胜状态，因此该特定状态对于当前玩家为必败状态</p>
 <p>· 从特定状态开始，如果任何操作都不能将状态变为必败状态，但是存在一种操作将状态变为必和状态，则当前玩家选择当前操作，将必和状态留给对方，因此该特定状态对于双方玩家都为必和状态</p>
-<h4 id="最优策略">1.2 最优策略</h4>
-<p>· 争取必胜。</p>
+<h4 id="1-2-最优策略"><a href="#1-2-最优策略" class="headerlink" title="1.2 最优策略"></a>1.2 最优策略</h4><p>· 争取必胜。</p>
 <p>· 在无法达到必胜的状态下，争取必和</p>
-<h3 id="二例题">二、例题</h3>
-<p><a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/cat-and-mouse/">913. 猫和老鼠 - 力扣（LeetCode） (leetcode-cn.com)</a></p>
-<figure>
-<img src="/images/猫和老鼠.png" alt="图片" /><figcaption aria-hidden="true">图片</figcaption>
-</figure>
-<h3 id="三解题思路">三、解题思路</h3>
-<p>由于博弈问题通常没有后效性，即只考虑状态，而不在乎该状态是如何来的，因此可以通过动态规划求解，使用三维数组dp表示状态</p>
-<h3 id="四代码实现">四、代码实现</h3>
-
+<h3 id="二、例题"><a href="#二、例题" class="headerlink" title="二、例题"></a>二、例题</h3><p> <a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/cat-and-mouse/">913. 猫和老鼠 - 力扣（LeetCode） (leetcode-cn.com)</a></p>
+<p><img src="/images/猫和老鼠.png" alt="图片"></p>
+<h3 id="三、解题思路"><a href="#三、解题思路" class="headerlink" title="三、解题思路"></a>三、解题思路</h3><p>由于博弈问题通常没有后效性，即只考虑状态，而不在乎该状态是如何来的，因此可以通过动态规划求解，使用三维数组dp表示状态</p>
+<h3 id="四、代码实现"><a href="#四、代码实现" class="headerlink" title="四、代码实现"></a>四、代码实现</h3>
     </div>
 
     
@@ -289,6 +280,9 @@
                 </a>
             </div>
             <div class="post-nav-item">
+                <a href="/content/%E4%BA%8C%E5%88%86%E6%9F%A5%E6%89%BE/" rel="next" title="二分查找">
+                  二分查找 <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
     </footer>
