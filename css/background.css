@@ -1,0 +1,6 @@
+#web_bg {
+  /* 背景图像的地址（url括号里）  */
+  background: url(/img/background.png),
+    /* 背景图像大小 */
+    rgba(255, 255, 255, 0.5);
+}
