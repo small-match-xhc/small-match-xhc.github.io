@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>LucidDreamer 论文笔记 | SmallMatch</title><meta name="author" content="JJX"><meta name="copyright" content="JJX"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本文的贡献：  我们对文本到 3D 生成中的基本组成部分——分数蒸馏采样（SDS）进行了深入分析，并确定了其提供不一致和低质量伪地面真值的关键限制。这解释了许多方法中存在的过度平滑效应。  针对 SDS 的限制，我们提出了区间分数匹配（ISM）。通过可逆扩散轨迹和基于区间的匹配，ISM 在逼真度和细节方面明显优于 SDS。  通过与 3D 高斯飞溅的集成，我们的模型实现了最先进的性能，超越了现有方">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>LucidDreamer 论文笔记 | SmallMatch</title><meta name="author" content="JJX"><meta name="copyright" content="JJX"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本文的贡献：  我们对文本到D生中的基本组成部分——分数蒸馏采样（SDS）进行了深入分析，并确定了其提供不一致和低质量伪地面真值的关键限制。这解释了许多方法中存在的过度平滑效应。  *对SD的限制我们提出了区间分数匹配（ISM）。通过可逆扩散轨迹和基于区间的匹配，ISM在逼真度细节方面明显优于SDS。  通过与3*高斯飞溅集成我们的模型实现了最先进的性能，超越了现有方法，并且训练成本更低。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LucidDreamer 论文笔记">
 <meta property="og:url" content="https://small-match-xhc.github.io/2024/05/08/LucidDreamer/index.html">
 <meta property="og:site_name" content="SmallMatch">
-<meta property="og:description" content="本文的贡献：  我们对文本到 3D 生成中的基本组成部分——分数蒸馏采样（SDS）进行了深入分析，并确定了其提供不一致和低质量伪地面真值的关键限制。这解释了许多方法中存在的过度平滑效应。  针对 SDS 的限制，我们提出了区间分数匹配（ISM）。通过可逆扩散轨迹和基于区间的匹配，ISM 在逼真度和细节方面明显优于 SDS。  通过与 3D 高斯飞溅的集成，我们的模型实现了最先进的性能，超越了现有方">
+<meta property="og:description" content="本文的贡献：  我们对文本到D生中的基本组成部分——分数蒸馏采样（SDS）进行了深入分析，并确定了其提供不一致和低质量伪地面真值的关键限制。这解释了许多方法中存在的过度平滑效应。  *对SD的限制我们提出了区间分数匹配（ISM）。通过可逆扩散轨迹和基于区间的匹配，ISM在逼真度细节方面明显优于SDS。  通过与3*高斯飞溅集成我们的模型实现了最先进的性能，超越了现有方法，并且训练成本更低。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://small-match-xhc.github.io/img/butterfly-icon.png">
 <meta property="article:published_time" content="2024-05-08T02:39:00.000Z">
-<meta property="article:modified_time" content="2026-02-26T05:35:48.361Z">
+<meta property="article:modified_time" content="2026-02-26T05:37:57.093Z">
 <meta property="article:author" content="JJX">
 <meta property="article:tag" content="3D生成">
 <meta property="article:tag" content="扩散模型">
@@ -20,7 +20,7 @@
   "url": "https://small-match-xhc.github.io/2024/05/08/LucidDreamer/",
   "image": "https://small-match-xhc.github.io/img/butterfly-icon.png",
   "datePublished": "2024-05-08T02:39:00.000Z",
-  "dateModified": "2026-02-26T05:35:48.361Z",
+  "dateModified": "2026-02-26T05:37:57.093Z",
   "author": [
     {
       "@type": "Person",
@@ -161,97 +161,97 @@
   isHighlightShrink: false,
   isToc: true,
   pageType: 'post'
-}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">SmallMatch</span></a><a class="nav-page-title" href="/"><span class="site-name">LucidDreamer 论文笔记</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">LucidDreamer 论文笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-05-08T02:39:00.000Z" title="发表于 2024-05-08 10:39:00">2024-05-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-02-26T05:35:48.361Z" title="更新于 2026-02-26 13:35:48">2026-02-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">论文笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>本文的贡献：</p>
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">SmallMatch</span></a><a class="nav-page-title" href="/"><span class="site-name">LucidDreamer 论文笔记</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">LucidDreamer 论文笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-05-08T02:39:00.000Z" title="发表于 2024-05-08 10:39:00">2024-05-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-02-26T05:37:57.093Z" title="更新于 2026-02-26 13:37:57">2026-02-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">论文笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>本文的贡献：</p>
 <ul>
-<li><p>我们对文本到 3D 生成中的基本组成部分——分数蒸馏采样（SDS）进行了深入分析，并确定了其提供不一致和低质量伪地面真值的关键限制。这解释了许多方法中存在的过度平滑效应。</p>
+<li><p>我们对文本到D生中的基本组成部分——分数蒸馏采样（SDS）进行了深入分析，并确定了其提供不一致和低质量伪地面真值的关键限制。这解释了许多方法中存在的过度平滑效应。</p>
 </li>
-<li><p>针对 SDS 的限制，我们提出了区间分数匹配（ISM）。通过可逆扩散轨迹和基于区间的匹配，ISM 在逼真度和细节方面明显优于 SDS。</p>
+<li><p>*对SD的限制我们提出了区间分数匹配（ISM）。通过可逆扩散轨迹和基于区间的匹配，ISM在逼真度细节方面明显优于SDS。</p>
 </li>
-<li><p>通过与 3D 高斯飞溅的集成，我们的模型实现了最先进的性能，超越了现有方法，并且训练成本更低。</p>
+<li><p>通过与3*高斯飞溅集成我们的模型实现了最先进的性能，超越了现有方法，并且训练成本更低。</p>
 </li>
 </ul>
 <hr>
 <p>第一个问题：</p>
-<p>SDS 背后的机制是将 3D 模型渲染的图像与扩散模型生成的伪地面真值（pseudo-GT）进行匹配。然而，如图 2 所示，生成的伪地面真值通常是不一致的，并且视觉质量较低。因此，所有这些伪地面真值提供的更新方向随后都被应用于同一个 3D 模型。由于平均效应，最终的结果往往过度平滑且缺乏细节。通常他们是将其对加噪的一系列的图片进行平均，即得到一个伪真值 s</p>
-<p>通过这张图，可以就看到其实预测出来的伪真值有时候其实可以不一致，例如第二行的第 2 个和第 4 个。</p>
-<p><img src="/images/LucidDreamer/image-20240506153328097.png" alt="SDS伪真值不一致示例"></p>
+<p>SDS背后的机制是将3模型渲染的图像扩散型生成的伪地面真值（pseudo-GT）进行匹配。然而，如图2所示，生成的伪地面真通是不一致的，并且视觉质量较低。因此，所有这些伪地面真值提供的更新方向随后都被应用于同一个3D模型。由于平均效应，最的结往往过度平滑且缺乏细节。通常他们是将其对加噪的一系列的图片进行平均，即得到一个伪真值s</p>
+<p>通过这张图，可以就看到其预测出来的伪真值有时候其实可以不一致，例如第二行的第2个和第4个。</p>
+<p>![SDS伪真不致示例(images&#x2F;LucidDreamer&#x2F;image-20240506153328097.png)</p>
 <p>首先本文揭露了伪地面真值的不满意来自于两个方面：</p>
 <p>1.其是由扩散模型的一步重建结果得到的结果误差较高</p>
 <p>2.扩散轨迹中的固有随机性</p>
 <p>本文通过提出一种新颖的方案，称为区间分数匹配（ISM） ，通过两个有效的方案：</p>
-<p>1.ISM 产生了一个可逆的扩散轨迹，并减轻了由伪地面真值不一致引起的平均效应。（即 去除噪声的轨迹是固定的,DDIM 通过精心设计的反向过程，使得从任何给定的噪声图像到清晰图像的路径成为确定性的，这意味着对于同样的输入和模型参数，每次执行反向过程都会得到完全相同的结果。）</p>
-<p>2.ISM 不是将伪地面真值与 3D 模型渲染的图像进行匹配，而是在扩散轨迹中进行两个区间步骤之间的匹配，从而避免了产生高重建误差的一步重建。</p>
-<p>原本的 SDS 指在最小化该 KL 散度</p>
-<p>$$
-\min_{\theta\in\Theta}\mathcal{L}<em>{\mathrm{sos}}(\theta):&#x3D;\mathbb{E}</em>{t,c}\left[\omega(t)D_{\mathrm{KL}}(\mathcal{N}(\boldsymbol{x}_t;\sqrt{\bar{\alpha}_t}\boldsymbol{x}_0,(1-\bar{\alpha}_t)\boldsymbol{I})\parallel p_\phi(\boldsymbol{x}_t|y))\right].
-$$</p>
-<p>将其重参数化：</p>
-<p>$$
-\min_{\theta\in\Theta}\mathcal{L}<em>\mathrm{sps}(\theta):&#x3D;\mathbb{E}</em>{t,c}\left[\omega(t)||\boldsymbol{\epsilon}_\phi(\boldsymbol{x}_t,t,y)-\boldsymbol{\epsilon}||_2^2\right],
-$$</p>
-<p>对$\theta$的梯度</p>
-<p>$$
-\nabla_\theta\mathcal{L}<em>{\mathrm{sps}}(\theta)\approx\mathbb{E}</em>{t,\boldsymbol{\epsilon},c}\left[\omega(t)(\underbrace{\boldsymbol{\epsilon}_\phi(\boldsymbol{x}<em>t,t,y)-\boldsymbol{\epsilon}}</em>{\text{SDS update direction}})\frac{\partial\boldsymbol{g}(\theta,c)}{\partial\theta}\right].
+<p>1.ISM产生了一个可逆的扩散轨迹，并减轻了由伪地真值不一致引起的平均效应。（即 去除噪声的轨迹是固定的,DDIM通过精心设计的反向过程，使得从任何给定的噪图像到清晰图像的路径成为确定性的，这意味着对于同样的输入和模型参数，每次执行反向过程都会得到完全相同的结果。）</p>
+<p>2.ISM不是将伪地面真值与3D模型渲染的图像进行匹配而是在扩散轨迹中进两个间步骤之间的匹配，从而避免了产生高重建误差的一步重建。</p>
+<p>原本的SDS指在最小化该KL散度
+$$
+\min_{\tetain\Thea}matcal{L}<em>{\mathrm{sos}}(\theta):&#x3D;\mathbb{E}</em>{t,c}\left[\omega(t)D_{\mathrm{KL}}(\mathcal{N}(\boldsymbol{x}_t;\sqrt{\bar{\alpha}_t}\boldsymbol{x}_0,(1-\bar{\alpha}_t)\boldsymbol{I})\parallel p_\phi(\boldsymbol{x}<em>t|y))\right].
+$$
+将其重参数化：
+$$
+\min</em>{\theta\in\Thea}\mathcl{L}<em>\mathrm{sps}(\theta):&#x3D;\mathbb{E}</em>{t,c}\left[\omega(t)||\boldsymbol{\epsilon}_\phi(\boldsymbol{x}<em>t,t,y)-\boldsymbol{\epsilon}||<em>2^2\right],
+$$
+对$\theta$的梯度
+$$
+\nabla_\theta\mahcal{L}</em>{\matrm{sps}}(\theta)\approx\mathbb{E}</em>{t,\boldsymbol{\epsilon},c}\left[\omega(t)(\underbrace{\boldsymbol{\epsilon}_\phi(\boldsymbol{x}<em>t,t,y)-\boldsymbol{\epsilon}}</em>{\text{SDS update direction}})\frac{\partial\boldsymbol{g}(\theta,c)}{\partial\theta}\right].
 $$</p>
 <p>$$
 \begin{aligned}
 &amp;\operatorname*{min}<em>{\theta\in\Theta}\mathcal{L}</em>{\mathrm{sos}}(\theta) :&#x3D;\mathbb{E}<em>{t,\boldsymbol{\epsilon},c}\left[\frac{\omega(t)}{\gamma(t)}||\gamma(t)(\boldsymbol{\epsilon}</em>{\phi}(\boldsymbol{x}<em>{t},t,y)-\boldsymbol{\epsilon})+\frac{(\boldsymbol{x}</em>{t}-\boldsymbol{x}<em>{t})}{\sqrt{\bar{\alpha}</em>{t}}}||<em>{2}^{2}\frac{\partial\boldsymbol{g}(\theta,c)}{\partial\theta}\right]\quad&#x3D;\mathbb{E}</em>{t,\boldsymbol{\epsilon},c}\left[\frac{\omega(t)}{\gamma(t)}||\boldsymbol{x}_0-\hat{\boldsymbol{x}}_0^t||_2^2\frac{\partial\boldsymbol{g}(\theta,c)}{\partial\theta}\right]. \</p>
 <p>\end{aligned}
+$$
+$$
+\gamma(t)&#x3D;\frac{\sqrt{1-\bar{\apha}_t}}{\sqrt{\bar{\alpha}_t}}
+$$
+$$
+\mathrm{where<del>}\boldsymbol{x}_t\im q^\theta(\boldsymbol{x}_t)\mathrm{</del>and~}\hat{\boldsymbol{x}}_0^t&#x3D;\frac{\boldsymbol{x}_t-\sqrt{1-\bar{\alpha}_t}\boldsymbol{\epsilon}_\phi(\boldsymbol{x}_t,t,y)}{\sqrt{\bar{\alpha}_t}}.\text{ Conse-}\\text{quently, we can also rewrite the gradient of SDS loss as:}
 $$</p>
-<p>$$
-\gamma(t)&#x3D;\frac{\sqrt{1-\bar{\alpha}_t}}{\sqrt{\bar{\alpha}_t}}
-$$</p>
-<p>$$
-\mathrm{where<del>}\boldsymbol{x}_t\sim q^\theta(\boldsymbol{x}_t)\mathrm{</del>and~}\hat{\boldsymbol{x}}_0^t&#x3D;\frac{\boldsymbol{x}_t-\sqrt{1-\bar{\alpha}_t}\boldsymbol{\epsilon}_\phi(\boldsymbol{x}_t,t,y)}{\sqrt{\bar{\alpha}_t}}.\text{ Conse-}\\text{quently, we can also rewrite the gradient of SDS loss as:}
-$$</p>
-<p>以下这个式子由原始图像与伪 GT 图做差得到的，其中消去了一系列与时间 t 无关的项，因为其认为其他时间项会在其他时间段遍历到，因此没有必要在当前时刻处理</p>
-<p><img src="/images/LucidDreamer/image-20240508103942764.png" alt="公式推导"></p>
-<p><a target="_blank" rel="noopener" href="https://kexue.fm/archives/9181">生成扩散模型漫谈（四）：DDIM &#x3D; 高观点 DDPM - 科学空间|Scientific Spaces</a></p>
-<p>ISM 的目的是使得能在随机视角中，得到的伪真值差异不会特别的大，从而保证不那么平滑，同时对于一致性也更好</p>
+<p>以下这个式子由原始图像与伪GT图做差得到的，其中消去了一系列与时间t无关的项，因为其认为其他时间项在其时间段遍历到，因此没有必要在当前时刻理
+<img src="/images/LucidDreamer/image-20240508103942764.png" alt="公式推导"></p>
+<p><a target="_blank" rel="noopener" href="https://kxue.fm/archives/9181">生成扩散模型漫谈（四）：DDIM &#x3D; 高观点DDPM - 科学空间|Scientific Spaces</a></p>
+<p>ISM的目的是使得能在随机视角中，得到的伪真值差异不会特别的大，从而保证不那么平滑，同时于一致性也更好</p>
 <p><img src="/images/LucidDreamer/image-20240506164321010.png" alt="ISM示意图"></p>
 <hr>
 <p>以下是对论文内容的总结，包括背景、动机、相关工作、当前工作的缺陷、问题分析、方法及贡献：</p>
-<h3 id="1-背景-Background"><a href="#1-背景-Background" class="headerlink" title="1. 背景 (Background)"></a>1. <strong>背景 (Background)</strong></h3><p>本文的研究领域主要集中在文本到 3D 生成任务中，尤其是如何利用扩散模型和相关的生成方法来生成高质量的 3D 资产。随着 AI 技术的发展，如何从文本描述生成高质量的三维模型成为了计算机视觉和图形学中的重要研究课题。</p>
-<h3 id="2-动机-Motivation"><a href="#2-动机-Motivation" class="headerlink" title="2. 动机 (Motivation)"></a>2. <strong>动机 (Motivation)</strong></h3><p>现有的文本到 3D 生成方法主要依赖于 Score Distillation Sampling (SDS)，然而，SDS 存在过度平滑的缺陷，这会导致生成的 3D 模型细节丧失。本文的动机是解决这一问题，提出一种新的方法（Interval Score Matching, ISM）来生成更为精细和一致的 3D 模型。</p>
+<h3 id="1-背景-Background"><a href="#1-背景-Background" class="headerlink" title="1. 背景 (Background)"></a>1. <strong>背景 (Background)</strong></h3><p>本文的研究领域主要集中在文本到3D生成任务中，尤其是如何利用扩散模型和相关的生成方法来生成高质量的3D资产。随着A技术发展，如何从文本描述生成高质量的三维模型成为了计算机视觉和图形学的重研究课题。</p>
+<h2 id="2-动机-Motivation"><a href="#2-动机-Motivation" class="headerlink" title="2. 动机 (Motivation)"></a>2. <strong>动机 (Motivation)</strong></h2><p>现有的文本到3D生成方法主要依赖于Score Distillation Sampling (SDS)，然而，DS在过度平滑的缺陷，会导致生成的3D模型细节丧失。本文的动机是解决这一问题，提出一种新的方法（Intrval Score Matchig,ISM）来生成更为精细和一致的3D模型。</p>
 <h3 id="3-相关工作-Related-Work"><a href="#3-相关工作-Related-Work" class="headerlink" title="3. 相关工作 (Related Work)"></a>3. <strong>相关工作 (Related Work)</strong></h3><ul>
-<li><strong>扩散模型 (Diffusion Models):</strong> 过去的研究表明，扩散模型在图像生成任务中取得了显著的成功。很多基于扩散模型的方法被应用于 2D 图像生成任务，但在 3D 生成领域的应用相对较少。</li>
-<li><strong>SDS 方法 (Score Distillation Sampling):</strong> SDS 是一种利用扩散模型生成伪真实标签（pseudo-GT）的技术。尽管它可以有效生成样本，但在 3D 生成中常常遇到过度平滑的问题，导致生成的 3D 模型缺乏细节。</li>
-<li><strong>DDIM 和其他生成方法:</strong> DDIM 是一种改进的生成方法，能够通过反向传播技术进行更精准的生成。然而，它在直接生成 3D 模型时也面临挑战。</li>
+<li><strong>扩散模型 (Diffuio Models):</strong> 过去的研究表明，扩散模型在图像生成任务中取得了显著的成功。很多基于扩散模型的方法被应用于2D图像生成任务，但在3D生成领域的应用相对较少。</li>
+<li><strong>SDS方法 (Score Distillation amling):</strong> DS一种利用扩散模型生成伪真实标签（pseuo-GT）的技术。尽管它可以有效生成样本，但在3D生成中常常遇到过度平滑的问题导致生成的3D模型缺乏细节。</li>
+<li><strong>DDIM和其他生成方法:</strong> DDIM是一种改进的生方法能够通过反向传播技术进行更精准的生成。然，它直接生成3D模型时也面临挑战。</li>
 </ul>
-<h3 id="4-当前工作的缺陷-Limitations-of-Current-Work"><a href="#4-当前工作的缺陷-Limitations-of-Current-Work" class="headerlink" title="4. 当前工作的缺陷 (Limitations of Current Work)"></a>4. <strong>当前工作的缺陷 (Limitations of Current Work)</strong></h3><p>当前的 SDS 方法虽然能够生成 3D 模型，但存在以下缺陷：</p>
+<h3 id="4-当前工作的缺-Limitations-of-Current-Work"><a href="#4-当前工作的缺-Limitations-of-Current-Work" class="headerlink" title="4. 当前工作的缺 (Limitations of Current Work)"></a>4. <strong>当前工作的缺 (Limitations of Current Work)</strong></h3><p>当前的SD方法然能够生成3D模型，但存在以下缺陷：</p>
 <ul>
-<li><strong>过度平滑问题 (Over-Smoothing Issue):</strong> 生成的 3D 模型往往缺乏细节，导致结构不清晰。</li>
-<li><strong>生成的伪真实标签不一致 (Inconsistency of Pseudo-GTs):</strong> SDS 生成的伪真实标签存在较大的不一致性，这进一步影响了生成结果的质量。</li>
+<li><strong>过度平滑问题 (Over-Smoothing Issue):</strong> 生成的3D模型往缺乏节，导致结构不清。
+ <strong>生成的伪真实标签不一致 (Inconsistency of Pseudo-GTs):</strong> SDS生成伪真标签存在较大的不一致性，这进一步影响了生成结果的质量。</li>
 </ul>
-<h3 id="5-如何分析问题-Problem-Analysis"><a href="#5-如何分析问题-Problem-Analysis" class="headerlink" title="5. 如何分析问题 (Problem Analysis)"></a>5. <strong>如何分析问题 (Problem Analysis)</strong></h3><p>本文分析了 SDS 方法的缺陷，认为其根源在于伪真实标签的生成过程中存在随机性，包括：</p>
+<h3 id="5-如何分析问题-Problem-Analysis"><a href="#5-如何分析问题-Problem-Analysis" class="headerlink" title="5. 如何分析问题 (Problem Analysis)"></a>5. <strong>如何分析问题 (Problem Analysis)</strong></h3><p>本文分了SDS方法的缺陷，认为其根源在于伪真实标签的生成过程中存在随机性，包括：</p>
 <ul>
 <li><p>单步重建误差：</p>
 </li>
-<li><p>时间步长的随机性 (Randomness in timestep t)</p>
+<li><p>时间步长的随机性 (Randomness in timste t)</p>
 </li>
 <li><p>噪声成分的随机性 (Randomness in noise component ε)</p>
 </li>
 <li><p>摄像机视角的随机性 (Randomness in camera pose c)</p>
-<p>如前所述，我们的目标是通过 DDIM（动态集成可逆映射）反演来预测噪声潜在轨迹 ${x_{\delta T}, x_{2\delta T}, \ldots, x_t}$，而不是像方程（3）中那样随机生成 $x_t$。
-这些因素导致了生成过程中的不一致性，进而影响了生成结果的质量。</p>
+<p>  如前所述，我们的目标是通过DDIM（动态集成可逆映射）反演来预测噪声潜在轨迹 {xδT,x2δT,…,xt}{x_{\delta T}, x_{  2\delta T}, … x_t}{xδT,x2δT,…,xt}，而不是像方程（3）中那样随机生成 xtxtxt。。</p>
 </li>
 </ul>
-<h3 id="6-方法-Method"><a href="#6-方法-Method" class="headerlink" title="6. 方法 (Method)"></a>6. <strong>方法 (Method)</strong></h3><p>本文提出了**Interval Score Matching (ISM)**方法，旨在通过更精确的梯度估计来解决过度平滑的问题。ISM 的关键创新在于：</p>
+<p>这些因素导致了生成过程中的不一致性，进而影响了生成结果的质量。</p>
+<h3 id="6-方法-Method"><a href="#6-方法-Method" class="headerlink" title="6. 方法 (Method)"></a>6. <strong>方法 (Method)</strong></h3><p>本文提出了**Interval Score Matching (ISM)**方法，旨在通过更精确的梯度估计来解决过度平滑的问题。ISM的关键创新在于：</p>
 <ul>
-<li>通过引入**多步去噪操作 (Multi-step Denoising)**，替代 SDS 中的单步伪真实标签估计。</li>
-<li>使用**DDIM 反转 (DDIM Inversion)**来估计噪声潜变量，从而避免了传统方法中的不一致性问题。</li>
-<li>结合**高效的 3D 表示 (3D Representation)**，如 3D 高斯点云（3D Gaussian Splatting），进一步提升了生成质量。</li>
+<li>通过引入**多步去噪操作 (Multi-step Denoising)*，替代SDS中的单步伪真实标签估计。</li>
+<li>使用**DDIM反转 (DDIM Inversion)<strong>来计噪声变量，从而避免了传统方法中的不一致性问题。
+-结合</strong>高效的3D表示 (3D Representation)**，如3D高斯点云（3D Gaussian Splatig），进一步提升了生成质量。</li>
 </ul>
-<h3 id="7-贡献-Contributions"><a href="#7-贡献-Contributions" class="headerlink" title="7. 贡献 (Contributions)"></a>7. <strong>贡献 (Contributions)</strong></h3><p>本文的主要贡献包括：</p>
+<h3 id="7-贡-ontributions"><a href="#7-贡-ontributions" class="headerlink" title="7. 贡 (ontributions)"></a>7. <strong>贡 (ontributions)</strong></h3><p>本文的主要贡献包括：</p>
 <ul>
-<li>提出了<strong>ISM 方法</strong>，成功解决了 SDS 中的过度平滑问题，生成了更具细节和一致性的 3D 模型。</li>
-<li>通过引入<strong>DDIM 反转和去噪技术</strong>，优化了生成过程，显著提升了训练效率。</li>
-<li>提出了一个结合 ISM 和 3D 高斯点云的框架，称为<strong>LucidDreamer</strong>，并在多个 3D 生成任务中证明了其优越性。</li>
-<li>通过用户研究和多项实验验证了 ISM 在多个场景中的有效性，展现了其广泛的应用前景。</li>
+<li>提出了<strong>ISM方法</strong>，成功解决了SDS中的过度平滑问题，生成了更具细节和一致性的3D模型。</li>
+<li>通过引入<strong>DDIM反转和噪技术</strong>，优化了生过程，著提升了训练效率。</li>
+<li>提出了一个结合IS和3高斯点云的框架，称为<strong>LuciDreamer</strong>，并在多个3D生成任务中证明了其优越性。</li>
+<li>通过用户研究多项实验了IM在多个场景中的有效性，展现了其广泛的应用前景。</li>
 </ul>
 <hr>
-<p>这篇论文在解决文本到 3D 生成中的细节不足和不一致性问题方面做出了创新性贡献，提出的 ISM 方法不仅在效率上得到了提升，而且在生成质量上也得到了显著改进。</p>
-</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://small-match-xhc.github.io">JJX</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://small-match-xhc.github.io/2024/05/08/LucidDreamer/">https://small-match-xhc.github.io/2024/05/08/LucidDreamer/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://small-match-xhc.github.io" target="_blank">SmallMatch</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">论文笔记</a><a class="post-meta__tags" href="/tags/3D%E7%94%9F%E6%88%90/">3D生成</a><a class="post-meta__tags" href="/tags/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/">扩散模型</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/02/26/hello-world/" title="Hello World"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Hello World</div></div><div class="info-2"><div class="info-item-1">欢迎来到我的博客！这是我的第一篇博客文章。 关于我我正在学习 Vibe Coding！ </div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">JJX</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%83%8C%E6%99%AF-Background"><span class="toc-number">1.</span> <span class="toc-text">1. 背景 (Background)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8A%A8%E6%9C%BA-Motivation"><span class="toc-number">2.</span> <span class="toc-text">2. 动机 (Motivation)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C-Related-Work"><span class="toc-number">3.</span> <span class="toc-text">3. 相关工作 (Related Work)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%BD%93%E5%89%8D%E5%B7%A5%E4%BD%9C%E7%9A%84%E7%BC%BA%E9%99%B7-Limitations-of-Current-Work"><span class="toc-number">4.</span> <span class="toc-text">4. 当前工作的缺陷 (Limitations of Current Work)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E9%97%AE%E9%A2%98-Problem-Analysis"><span class="toc-number">5.</span> <span class="toc-text">5. 如何分析问题 (Problem Analysis)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%96%B9%E6%B3%95-Method"><span class="toc-number">6.</span> <span class="toc-text">6. 方法 (Method)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E8%B4%A1%E7%8C%AE-Contributions"><span class="toc-number">7.</span> <span class="toc-text">7. 贡献 (Contributions)</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/26/hello-world/" title="Hello World">Hello World</a><time datetime="2026-02-26T03:27:26.000Z" title="发表于 2026-02-26 11:27:26">2026-02-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/08/LucidDreamer/" title="LucidDreamer 论文笔记">LucidDreamer 论文笔记</a><time datetime="2024-05-08T02:39:00.000Z" title="发表于 2024-05-08 10:39:00">2024-05-08</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By JJX</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"><script>(() => {
+<p>篇论在解决文本到3D生成中的细节不足和不一致性问题方面做出了创新贡献，出的ISM方法不仅在效率上得到了提升，而且在生成质量上也得到了显著改进。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://small-match-xhc.github.io">JJX</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://small-match-xhc.github.io/2024/05/08/LucidDreamer/">https://small-match-xhc.github.io/2024/05/08/LucidDreamer/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://small-match-xhc.github.io" target="_blank">SmallMatch</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">论文笔记</a><a class="post-meta__tags" href="/tags/3D%E7%94%9F%E6%88%90/">3D生成</a><a class="post-meta__tags" href="/tags/%E6%89%A9%E6%95%A3%E6%A8%A1%E5%9E%8B/">扩散模型</a></div><div class="post-share"><div class="social-share" data-image="/img/butterfly-icon.png" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2026/02/26/hello-world/" title="Hello World"><div class="cover" style="background: var(--default-bg-color)"></div><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">Hello World</div></div><div class="info-2"><div class="info-item-1">欢迎来到我的博客！这是我的第一篇博客文章。 关于我我正在学习 Vibe Coding！ </div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/butterfly-icon.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">JJX</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">2</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">1</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%83%8C%E6%99%AF-Background"><span class="toc-number">1.</span> <span class="toc-text">1. 背景 (Background)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%8A%A8%E6%9C%BA-Motivation"><span class="toc-number">2.</span> <span class="toc-text">2. 动机 (Motivation)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E7%9B%B8%E5%85%B3%E5%B7%A5%E4%BD%9C-Related-Work"><span class="toc-number">2.1.</span> <span class="toc-text">3. 相关工作 (Related Work)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%BD%93%E5%89%8D%E5%B7%A5%E4%BD%9C%E7%9A%84%E7%BC%BA-Limitations-of-Current-Work"><span class="toc-number">2.2.</span> <span class="toc-text">4. 当前工作的缺 (Limitations of Current Work)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90%E9%97%AE%E9%A2%98-Problem-Analysis"><span class="toc-number">2.3.</span> <span class="toc-text">5. 如何分析问题 (Problem Analysis)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E6%96%B9%E6%B3%95-Method"><span class="toc-number">2.4.</span> <span class="toc-text">6. 方法 (Method)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E8%B4%A1-ontributions"><span class="toc-number">2.5.</span> <span class="toc-text">7. 贡 (ontributions)</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/02/26/hello-world/" title="Hello World">Hello World</a><time datetime="2026-02-26T03:27:26.000Z" title="发表于 2026-02-26 11:27:26">2026-02-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/05/08/LucidDreamer/" title="LucidDreamer 论文笔记">LucidDreamer 论文笔记</a><time datetime="2024-05-08T02:39:00.000Z" title="发表于 2024-05-08 10:39:00">2024-05-08</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By JJX</span><span class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.1.1</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.4</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><div class="js-pjax"><script>(() => {
   const loadMathjax = () => {
     if (!window.MathJax) {
       window.MathJax = {
