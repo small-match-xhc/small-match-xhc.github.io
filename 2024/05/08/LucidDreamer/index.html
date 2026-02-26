@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://small-match-xhc.github.io/img/butterfly-icon.png">
 <meta property="article:published_time" content="2024-05-08T02:39:00.000Z">
-<meta property="article:modified_time" content="2026-02-26T05:17:02.430Z">
+<meta property="article:modified_time" content="2026-02-26T05:29:30.741Z">
 <meta property="article:author" content="JJX">
 <meta property="article:tag" content="3D生成">
 <meta property="article:tag" content="扩散模型">
@@ -20,7 +20,7 @@
   "url": "https://small-match-xhc.github.io/2024/05/08/LucidDreamer/",
   "image": "https://small-match-xhc.github.io/img/butterfly-icon.png",
   "datePublished": "2024-05-08T02:39:00.000Z",
-  "dateModified": "2026-02-26T05:17:02.430Z",
+  "dateModified": "2026-02-26T05:29:30.741Z",
   "author": [
     {
       "@type": "Person",
@@ -161,7 +161,7 @@
   isHighlightShrink: false,
   isToc: true,
   pageType: 'post'
-}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">SmallMatch</span></a><a class="nav-page-title" href="/"><span class="site-name">LucidDreamer 论文笔记</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">LucidDreamer 论文笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-05-08T02:39:00.000Z" title="发表于 2024-05-08 10:39:00">2024-05-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-02-26T05:17:02.430Z" title="更新于 2026-02-26 13:17:02">2026-02-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">论文笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>本文的贡献：</p>
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">SmallMatch</span></a><a class="nav-page-title" href="/"><span class="site-name">LucidDreamer 论文笔记</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">LucidDreamer 论文笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-05-08T02:39:00.000Z" title="发表于 2024-05-08 10:39:00">2024-05-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-02-26T05:29:30.741Z" title="更新于 2026-02-26 13:29:30">2026-02-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">论文笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>本文的贡献：</p>
 <ul>
 <li><p>我们对文本到3D生成中的基本组成部分——分数蒸馏采样（SDS）进行了深入分析，并确定了其提供不一致和低质量伪地面真值的关键限制。这解释了许多方法中存在的过度平滑效应。</p>
 </li>
@@ -181,21 +181,32 @@
 <p>本文通过提出一种新颖的方案，称为区间分数匹配（ISM） ，通过两个有效的方案：</p>
 <p>1.ISM产生了一个可逆的扩散轨迹，并减轻了由伪地面真值不一致引起的平均效应。（即 去除噪声的轨迹是固定的,DDIM通过精心设计的反向过程，使得从任何给定的噪声图像到清晰图像的路径成为确定性的，这意味着对于同样的输入和模型参数，每次执行反向过程都会得到完全相同的结果。）</p>
 <p>2.ISM不是将伪地面真值与3D模型渲染的图像进行匹配，而是在扩散轨迹中进行两个区间步骤之间的匹配，从而避免了产生高重建误差的一步重建。</p>
-<p>原本的SDS指在最小化该KL散度</p>
-<script type="math/tex; mode=display">
-\min_{\theta\in\Theta}\mathcal{L}_{\mathrm{sos}}(\theta):=\mathbb{E}_{t,c}\left[\omega(t)D_{\mathrm{KL}}(\mathcal{N}(\boldsymbol{x}_t;\sqrt{\bar{\alpha}_t}\boldsymbol{x}_0,(1-\bar{\alpha}_t)\boldsymbol{I})\parallel p_\phi(\boldsymbol{x}_t|y))\right].</script><p>将其重参数化：</p>
-<script type="math/tex; mode=display">
-\min_{\theta\in\Theta}\mathcal{L}_\mathrm{sps}(\theta):=\mathbb{E}_{t,c}\left[\omega(t)||\boldsymbol{\epsilon}_\phi(\boldsymbol{x}_t,t,y)-\boldsymbol{\epsilon}||_2^2\right],</script><p>对$\theta$的梯度</p>
-<script type="math/tex; mode=display">
-\nabla_\theta\mathcal{L}_{\mathrm{sps}}(\theta)\approx\mathbb{E}_{t,\boldsymbol{\epsilon},c}\left[\omega(t)(\underbrace{\boldsymbol{\epsilon}_\phi(\boldsymbol{x}_t,t,y)-\boldsymbol{\epsilon}}_{\text{SDS update direction}})\frac{\partial\boldsymbol{g}(\theta,c)}{\partial\theta}\right].</script><script type="math/tex; mode=display">
+<p>原本的SDS指在最小化该KL散度
+$$
+\min_{\theta\in\Theta}\mathcal{L}<em>{\mathrm{sos}}(\theta):&#x3D;\mathbb{E}</em>{t,c}\left[\omega(t)D_{\mathrm{KL}}(\mathcal{N}(\boldsymbol{x}<em>t;\sqrt{\bar{\alpha}<em>t}\boldsymbol{x}<em>0,(1-\bar{\alpha}<em>t)\boldsymbol{I})\parallel p</em>\phi(\boldsymbol{x}<em>t|y))\right].
+$$
+将其重参数化：
+$$
+\min</em>{\theta\in\Theta}\mathcal{L}</em>\mathrm{sps}(\theta):&#x3D;\mathbb{E}</em>{t,c}\left[\omega(t)||\boldsymbol{\epsilon}</em>\phi(\boldsymbol{x}<em>t,t,y)-\boldsymbol{\epsilon}||<em>2^2\right],
+$$
+对$\theta$的梯度
+$$
+\nabla</em>\theta\mathcal{L}</em>{\mathrm{sps}}(\theta)\approx\mathbb{E}<em>{t,\boldsymbol{\epsilon},c}\left[\omega(t)(\underbrace{\boldsymbol{\epsilon}</em>\phi(\boldsymbol{x}<em>t,t,y)-\boldsymbol{\epsilon}}</em>{\text{SDS update direction}})\frac{\partial\boldsymbol{g}(\theta,c)}{\partial\theta}\right].
+$$</p>
+<p>$$
 \begin{aligned}
-&\operatorname*{min}_{\theta\in\Theta}\mathcal{L}_{\mathrm{sos}}(\theta) :=\mathbb{E}_{t,\boldsymbol{\epsilon},c}\left[\frac{\omega(t)}{\gamma(t)}||\gamma(t)(\boldsymbol{\epsilon}_{\phi}(\boldsymbol{x}_{t},t,y)-\boldsymbol{\epsilon})+\frac{(\boldsymbol{x}_{t}-\boldsymbol{x}_{t})}{\sqrt{\bar{\alpha}_{t}}}||_{2}^{2}\frac{\partial\boldsymbol{g}(\theta,c)}{\partial\theta}\right]\quad=\mathbb{E}_{t,\boldsymbol{\epsilon},c}\left[\frac{\omega(t)}{\gamma(t)}||\boldsymbol{x}_0-\hat{\boldsymbol{x}}_0^t||_2^2\frac{\partial\boldsymbol{g}(\theta,c)}{\partial\theta}\right]. \\
-
-\end{aligned}</script><script type="math/tex; mode=display">
-\gamma(t)=\frac{\sqrt{1-\bar{\alpha}_t}}{\sqrt{\bar{\alpha}_t}}</script><script type="math/tex; mode=display">
-\mathrm{where~}\boldsymbol{x}_t\sim q^\theta(\boldsymbol{x}_t)\mathrm{~and~}\hat{\boldsymbol{x}}_0^t=\frac{\boldsymbol{x}_t-\sqrt{1-\bar{\alpha}_t}\boldsymbol{\epsilon}_\phi(\boldsymbol{x}_t,t,y)}{\sqrt{\bar{\alpha}_t}}.\text{ Conse-}\\\text{quently, we can also rewrite the gradient of SDS loss as:}</script><p>以下这个式子由原始图像与伪GT图做差得到的，其中消去了一系列与时间t无关的项，因为其认为其他时间项会在其他时间段遍历到，因此没有必要在当前时刻处理</p>
+&amp;\operatorname*{min}<em>{\theta\in\Theta}\mathcal{L}</em>{\mathrm{sos}}(\theta) :&#x3D;\mathbb{E}<em>{t,\boldsymbol{\epsilon},c}\left[\frac{\omega(t)}{\gamma(t)}||\gamma(t)(\boldsymbol{\epsilon}</em>{\phi}(\boldsymbol{x}<em>{t},t,y)-\boldsymbol{\epsilon})+\frac{(\boldsymbol{x}</em>{t}-\boldsymbol{x}<em>{t})}{\sqrt{\bar{\alpha}</em>{t}}}||<em>{2}^{2}\frac{\partial\boldsymbol{g}(\theta,c)}{\partial\theta}\right]\quad&#x3D;\mathbb{E}</em>{t,\boldsymbol{\epsilon},c}\left[\frac{\omega(t)}{\gamma(t)}||\boldsymbol{x}_0-\hat{\boldsymbol{x}}_0^t||_2^2\frac{\partial\boldsymbol{g}(\theta,c)}{\partial\theta}\right]. \</p>
+<p>\end{aligned}
+$$
+$$
+\gamma(t)&#x3D;\frac{\sqrt{1-\bar{\alpha}_t}}{\sqrt{\bar{\alpha}_t}}
+$$
+$$
+\mathrm{where<del>}\boldsymbol{x}_t\sim q^\theta(\boldsymbol{x}_t)\mathrm{</del>and~}\hat{\boldsymbol{x}}_0^t&#x3D;\frac{\boldsymbol{x}_t-\sqrt{1-\bar{\alpha}<em>t}\boldsymbol{\epsilon}</em>\phi(\boldsymbol{x}_t,t,y)}{\sqrt{\bar{\alpha}_t}}.\text{ Conse-}\\text{quently, we can also rewrite the gradient of SDS loss as:}
+$$</p>
+<p>以下这个式子由原始图像与伪GT图做差得到的，其中消去了一系列与时间t无关的项，因为其认为其他时间项会在其他时间段遍历到，因此没有必要在当前时刻处理</p>
 <p><img src="/images/LucidDreamer/image-20240508103942764.png" alt="公式推导"></p>
-<p><a target="_blank" rel="noopener" href="https://kexue.fm/archives/9181">生成扩散模型漫谈（四）：DDIM = 高观点DDPM - 科学空间|Scientific Spaces</a></p>
+<p><a target="_blank" rel="noopener" href="https://kexue.fm/archives/9181">生成扩散模型漫谈（四）：DDIM &#x3D; 高观点DDPM - 科学空间|Scientific Spaces</a></p>
 <p>ISM的目的是使得能在随机视角中，得到的伪真值差异不会特别的大，从而保证不那么平滑，同时对于一致性也更好</p>
 <p><img src="/images/LucidDreamer/image-20240506164321010.png" alt="ISM示意图"></p>
 <hr>
@@ -214,20 +225,21 @@
 </ul>
 <h3 id="5-如何分析问题-Problem-Analysis"><a href="#5-如何分析问题-Problem-Analysis" class="headerlink" title="5. 如何分析问题 (Problem Analysis)"></a>5. <strong>如何分析问题 (Problem Analysis)</strong></h3><p>本文分析了SDS方法的缺陷，认为其根源在于伪真实标签的生成过程中存在随机性，包括：</p>
 <ul>
-<li>单步重建误差：</li>
+<li><p>单步重建误差：</p>
+</li>
 <li><p>时间步长的随机性 (Randomness in timestep t)</p>
 </li>
 <li><p>噪声成分的随机性 (Randomness in noise component ε)</p>
 </li>
 <li><p>摄像机视角的随机性 (Randomness in camera pose c)</p>
-<p>如前所述，我们的目标是通过DDIM（动态集成可逆映射）反演来预测噪声潜在轨迹 {xδT,x2δT,…,xt}{x<em>{\delta T}, x</em>{2\delta T}, …, x_t}{xδT,x2δT,…,xt}，而不是像方程（3）中那样随机生成 xtxtxt。</p>
+<p>如前所述，我们的目标是通过DDIM（动态集成可逆映射）反演来预测噪声潜在轨迹，而不是像方程（3）中那样随机生成 $x_t$。</p>
 </li>
 </ul>
 <p>这些因素导致了生成过程中的不一致性，进而影响了生成结果的质量。</p>
-<h3 id="6-方法-Method"><a href="#6-方法-Method" class="headerlink" title="6. 方法 (Method)"></a>6. <strong>方法 (Method)</strong></h3><p>本文提出了<strong>Interval Score Matching (ISM)</strong>方法，旨在通过更精确的梯度估计来解决过度平滑的问题。ISM的关键创新在于：</p>
+<h3 id="6-方法-Method"><a href="#6-方法-Method" class="headerlink" title="6. 方法 (Method)"></a>6. <strong>方法 (Method)</strong></h3><p>本文提出了**Interval Score Matching (ISM)**方法，旨在通过更精确的梯度估计来解决过度平滑的问题。ISM的关键创新在于：</p>
 <ul>
 <li>通过引入<strong>多步去噪操作 (Multi-step Denoising)</strong>，替代SDS中的单步伪真实标签估计。</li>
-<li>使用<strong>DDIM反转 (DDIM Inversion)</strong>来估计噪声潜变量，从而避免了传统方法中的不一致性问题。</li>
+<li>使用**DDIM反转 (DDIM Inversion)**来估计噪声潜变量，从而避免了传统方法中的不一致性问题。</li>
 <li>结合<strong>高效的3D表示 (3D Representation)</strong>，如3D高斯点云（3D Gaussian Splatting），进一步提升了生成质量。</li>
 </ul>
 <h3 id="7-贡献-Contributions"><a href="#7-贡献-Contributions" class="headerlink" title="7. 贡献 (Contributions)"></a>7. <strong>贡献 (Contributions)</strong></h3><p>本文的主要贡献包括：</p>
