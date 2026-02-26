@@ -183,15 +183,15 @@
 <p>2.ISM不是将伪地面真值与3D模型渲染的图像进行匹配，而是在扩散轨迹中进行两个区间步骤之间的匹配，从而避免了产生高重建误差的一步重建。</p>
 <p>原本的SDS指在最小化该KL散度
 $$
-\min_{\theta\in\Theta}\mathcal{L}<em>{\mathrm{sos}}(\theta):&#x3D;\mathbb{E}</em>{t,c}\left[\omega(t)D_{\mathrm{KL}}(\mathcal{N}(\boldsymbol{x}<em>t;\sqrt{\bar{\alpha}<em>t}\boldsymbol{x}<em>0,(1-\bar{\alpha}<em>t)\boldsymbol{I})\parallel p</em>\phi(\boldsymbol{x}<em>t|y))\right].
+\min_{\theta\in\Theta}\mathcal{L}<em>{\mathrm{sos}}(\theta):&#x3D;\mathbb{E}</em>{t,c}\left[\omega(t)D_{\mathrm{KL}}(\mathcal{N}(\boldsymbol{x}_t;\sqrt{\bar{\alpha}_t}\boldsymbol{x}_0,(1-\bar{\alpha}_t)\boldsymbol{I})\parallel p_\phi(\boldsymbol{x}<em>t|y))\right].
 $$
 将其重参数化：
 $$
-\min</em>{\theta\in\Theta}\mathcal{L}</em>\mathrm{sps}(\theta):&#x3D;\mathbb{E}</em>{t,c}\left[\omega(t)||\boldsymbol{\epsilon}</em>\phi(\boldsymbol{x}<em>t,t,y)-\boldsymbol{\epsilon}||<em>2^2\right],
+\min</em>{\theta\in\Theta}\mathcal{L}<em>\mathrm{sps}(\theta):&#x3D;\mathbb{E}</em>{t,c}\left[\omega(t)||\boldsymbol{\epsilon}_\phi(\boldsymbol{x}<em>t,t,y)-\boldsymbol{\epsilon}||<em>2^2\right],
 $$
 对$\theta$的梯度
 $$
-\nabla</em>\theta\mathcal{L}</em>{\mathrm{sps}}(\theta)\approx\mathbb{E}<em>{t,\boldsymbol{\epsilon},c}\left[\omega(t)(\underbrace{\boldsymbol{\epsilon}</em>\phi(\boldsymbol{x}<em>t,t,y)-\boldsymbol{\epsilon}}</em>{\text{SDS update direction}})\frac{\partial\boldsymbol{g}(\theta,c)}{\partial\theta}\right].
+\nabla_\theta\mathcal{L}</em>{\mathrm{sps}}(\theta)\approx\mathbb{E}</em>{t,\boldsymbol{\epsilon},c}\left[\omega(t)(\underbrace{\boldsymbol{\epsilon}_\phi(\boldsymbol{x}<em>t,t,y)-\boldsymbol{\epsilon}}</em>{\text{SDS update direction}})\frac{\partial\boldsymbol{g}(\theta,c)}{\partial\theta}\right].
 $$</p>
 <p>$$
 \begin{aligned}
@@ -202,7 +202,7 @@ $$
 \gamma(t)&#x3D;\frac{\sqrt{1-\bar{\alpha}_t}}{\sqrt{\bar{\alpha}_t}}
 $$
 $$
-\mathrm{where<del>}\boldsymbol{x}_t\sim q^\theta(\boldsymbol{x}_t)\mathrm{</del>and~}\hat{\boldsymbol{x}}_0^t&#x3D;\frac{\boldsymbol{x}_t-\sqrt{1-\bar{\alpha}<em>t}\boldsymbol{\epsilon}</em>\phi(\boldsymbol{x}_t,t,y)}{\sqrt{\bar{\alpha}_t}}.\text{ Conse-}\\text{quently, we can also rewrite the gradient of SDS loss as:}
+\mathrm{where<del>}\boldsymbol{x}_t\sim q^\theta(\boldsymbol{x}_t)\mathrm{</del>and~}\hat{\boldsymbol{x}}_0^t&#x3D;\frac{\boldsymbol{x}_t-\sqrt{1-\bar{\alpha}_t}\boldsymbol{\epsilon}_\phi(\boldsymbol{x}_t,t,y)}{\sqrt{\bar{\alpha}_t}}.\text{ Conse-}\\text{quently, we can also rewrite the gradient of SDS loss as:}
 $$</p>
 <p>以下这个式子由原始图像与伪GT图做差得到的，其中消去了一系列与时间t无关的项，因为其认为其他时间项会在其他时间段遍历到，因此没有必要在当前时刻处理</p>
 <p><img src="/images/LucidDreamer/image-20240508103942764.png" alt="公式推导"></p>
@@ -238,9 +238,9 @@ $$</p>
 <p>这些因素导致了生成过程中的不一致性，进而影响了生成结果的质量。</p>
 <h3 id="6-方法-Method"><a href="#6-方法-Method" class="headerlink" title="6. 方法 (Method)"></a>6. <strong>方法 (Method)</strong></h3><p>本文提出了**Interval Score Matching (ISM)**方法，旨在通过更精确的梯度估计来解决过度平滑的问题。ISM的关键创新在于：</p>
 <ul>
-<li>通过引入<strong>多步去噪操作 (Multi-step Denoising)</strong>，替代SDS中的单步伪真实标签估计。</li>
+<li>通过引入**多步去噪操作 (Multi-step Denoising)**，替代SDS中的单步伪真实标签估计。</li>
 <li>使用**DDIM反转 (DDIM Inversion)**来估计噪声潜变量，从而避免了传统方法中的不一致性问题。</li>
-<li>结合<strong>高效的3D表示 (3D Representation)</strong>，如3D高斯点云（3D Gaussian Splatting），进一步提升了生成质量。</li>
+<li>结合**高效的3D表示 (3D Representation)**，如3D高斯点云（3D Gaussian Splatting），进一步提升了生成质量。</li>
 </ul>
 <h3 id="7-贡献-Contributions"><a href="#7-贡献-Contributions" class="headerlink" title="7. 贡献 (Contributions)"></a>7. <strong>贡献 (Contributions)</strong></h3><p>本文的主要贡献包括：</p>
 <ul>
