@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://small-match-xhc.github.io/img/butterfly-icon.png">
 <meta property="article:published_time" content="2024-05-08T02:39:00.000Z">
-<meta property="article:modified_time" content="2026-02-26T05:29:30.741Z">
+<meta property="article:modified_time" content="2026-02-26T05:32:24.621Z">
 <meta property="article:author" content="JJX">
 <meta property="article:tag" content="3D生成">
 <meta property="article:tag" content="扩散模型">
@@ -20,7 +20,7 @@
   "url": "https://small-match-xhc.github.io/2024/05/08/LucidDreamer/",
   "image": "https://small-match-xhc.github.io/img/butterfly-icon.png",
   "datePublished": "2024-05-08T02:39:00.000Z",
-  "dateModified": "2026-02-26T05:29:30.741Z",
+  "dateModified": "2026-02-26T05:32:24.621Z",
   "author": [
     {
       "@type": "Person",
@@ -161,7 +161,7 @@
   isHighlightShrink: false,
   isToc: true,
   pageType: 'post'
-}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">SmallMatch</span></a><a class="nav-page-title" href="/"><span class="site-name">LucidDreamer 论文笔记</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">LucidDreamer 论文笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-05-08T02:39:00.000Z" title="发表于 2024-05-08 10:39:00">2024-05-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-02-26T05:29:30.741Z" title="更新于 2026-02-26 13:29:30">2026-02-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">论文笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>本文的贡献：</p>
+}</script><meta name="generator" content="Hexo 8.1.1"></head><body><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">SmallMatch</span></a><a class="nav-page-title" href="/"><span class="site-name">LucidDreamer 论文笔记</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">LucidDreamer 论文笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-05-08T02:39:00.000Z" title="发表于 2024-05-08 10:39:00">2024-05-08</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-02-26T05:32:24.621Z" title="更新于 2026-02-26 13:32:24">2026-02-26</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">论文笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">浏览量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><p>本文的贡献：</p>
 <ul>
 <li><p>我们对文本到3D生成中的基本组成部分——分数蒸馏采样（SDS）进行了深入分析，并确定了其提供不一致和低质量伪地面真值的关键限制。这解释了许多方法中存在的过度平滑效应。</p>
 </li>
@@ -232,7 +232,7 @@ $$</p>
 <li><p>噪声成分的随机性 (Randomness in noise component ε)</p>
 </li>
 <li><p>摄像机视角的随机性 (Randomness in camera pose c)</p>
-<p>如前所述，我们的目标是通过DDIM（动态集成可逆映射）反演来预测噪声潜在轨迹，而不是像方程（3）中那样随机生成 $x_t$。</p>
+<p>  如前所述，我们的目标是通过DDIM（动态集成可逆映射）反演来预测噪声潜在轨迹 {xδT,x2δT,…,xt}{x_{\delta T}, x_{2\delta T}, …, x_t}{xδT,x2δT,…,xt}，而不是像方程（3）中那样随机生成 xtxtxt。。</p>
 </li>
 </ul>
 <p>这些因素导致了生成过程中的不一致性，进而影响了生成结果的质量。</p>
